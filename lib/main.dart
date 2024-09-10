@@ -31,7 +31,7 @@ class WhatsAppHomeScreen extends StatelessWidget {
 
   WhatsAppHomeScreen({required this.cameras});
 
-  @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
