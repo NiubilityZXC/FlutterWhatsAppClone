@@ -6,6 +6,11 @@ import 'package:flutterwhatsapp/whatsapp_home.dart';
 
 List<CameraDescription> cameras;
 
+Future<Null> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
