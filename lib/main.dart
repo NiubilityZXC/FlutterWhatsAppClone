@@ -1,49 +1,28 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:flutterwhatsapp/whatsapp_home.dart';
 
-late List<CameraDescription> availableCamerasList;
+List<CameraDescription> cameras;
 
-Future<void> main() async {
+Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  availableCamerasList = await availableCameras();
-  runApp(WhatsAppCloneApp());
+  cameras = await availableCameras();
+  runApp(new MyApp());
 }
 
-class WhatsAppCloneApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "WhatsApp Clone",
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Color(0xff25D366), // WhatsApp 绿色
-        ),
+    return new MaterialApp(
+      title: "WhatsApp",
+      theme: new ThemeData(
+        primaryColor: new Color(0xff075E54),
+        accentColor: new Color(0xff25D366),
       ),
       debugShowCheckedModeBanner: false,
-      home: WhatsAppHomeScreen(cameras: availableCamerasList),
-    );
-  }
-}
-
-class WhatsAppHomeScreen extends StatelessWidget {
-  final List<CameraDescription> cameras;
-
-  WhatsAppHomeScreen({required this.cameras});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('WhatsApp Home'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Center(
-        child: Text(
-          'Welcome to WhatsApp Clone!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      home: new WhatsAppHome(cameras:cameras),
     );
   }
 }
