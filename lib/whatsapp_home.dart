@@ -7,7 +7,7 @@ import 'package:flutterwhatsapp/pages/status_screen.dart';
 
 class WhatsAppHome extends StatefulWidget {
   final List<CameraDescription> cameras;
-  WhatsAppHome({this.cameras});
+  const WhatsAppHome({Key? key, required this.cameras}) : super(key: key);
 
   @override
   _WhatsAppHomeState createState() => _WhatsAppHomeState();
@@ -15,21 +15,17 @@ class WhatsAppHome extends StatefulWidget {
 
 class _WhatsAppHomeState extends State<WhatsAppHome>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
   bool showFab = true;
 
   @override
   void initState() {
     super.initState();
-
     _tabController = TabController(vsync: this, initialIndex: 1, length: 4);
     _tabController.addListener(() {
-      if (_tabController.index == 1) {
-        showFab = true;
-      } else {
-        showFab = false;
-      }
-      setState(() {});
+      setState(() {
+        showFab = _tabController.index == 1;
+      });
     });
   }
 
@@ -37,43 +33,39 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WhatsApp"),
+        title: const Text("WhatsApp"),
         elevation: 0.7,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
-          tabs: <Widget>[
+          tabs: const <Widget>[
             Tab(icon: Icon(Icons.camera_alt)),
             Tab(text: "CHATS"),
-            Tab(
-              text: "STATUS",
-            ),
-            Tab(
-              text: "CALLS",
-            ),
+            Tab(text: "STATUS"),
+            Tab(text: "CALLS"),
           ],
         ),
         actions: <Widget>[
-          Icon(Icons.search),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          const Icon(Icons.search),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0),
           ),
-          Icon(Icons.more_vert)
+          const Icon(Icons.more_vert),
         ],
       ),
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          CameraScreen(widget.cameras),
-          ChatScreen(),
-          StatusScreen(),
-          CallsScreen(),
+          CameraScreen(cameras: widget.cameras),
+          const ChatScreen(),
+          const StatusScreen(),
+          const CallsScreen(),
         ],
       ),
       floatingActionButton: showFab
           ? FloatingActionButton(
-              backgroundColor: Theme.of(context).accentColor,
-              child: Icon(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              child: const Icon(
                 Icons.message,
                 color: Colors.white,
               ),
